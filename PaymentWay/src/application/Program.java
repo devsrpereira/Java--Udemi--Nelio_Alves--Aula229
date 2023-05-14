@@ -31,17 +31,16 @@ public class Program {
         Contract obj = new Contract(number, date, totalValue);
         ContractService service = new ContractService(new PaypalService());
 
-        for (int i = 1; i < (months + 1); i++) {
-           service.processContract(obj,months);
-        }
-
         System.out.println();
         System.out.println("PARCELAS:");
+
+        service.processContract(obj,months);
 
         for (Installment installment: obj.getInstallmentList()) {
             System.out.println(installment);
         }
-//        for (int i = 0; i < months; i++) {
+
+        //        for (int i = 0; i < months; i++) {
 //            System.out.println(obj.getInstallmentList().get(i));
 //        }
 
