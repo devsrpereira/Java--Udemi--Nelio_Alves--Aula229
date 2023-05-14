@@ -3,13 +3,16 @@ package model.entities;
 import model.services.ContractService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Contract {
     private int number;
     private LocalDate date;
     private double totalValue;
 
-    private Installment installment;
+    private List<Installment> installmentList = new ArrayList<>();
+
     private ContractService service;
 
     public Contract(){}
@@ -35,8 +38,8 @@ public class Contract {
     public double getTotalValue() {
         return totalValue;
     }
-    public Installment getInstallment() {
-        return installment;
+    public List<Installment> getInstallmentList() {
+        return installmentList;
     }
     public ContractService getService() {
         return service;

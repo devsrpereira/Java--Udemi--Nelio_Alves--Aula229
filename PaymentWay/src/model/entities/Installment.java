@@ -7,7 +7,7 @@ public class Installment {
     private LocalDate dueDate;
     private double amount;
 
-    DateTimeFormatter frmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static DateTimeFormatter frmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public Installment(){};
     public Installment(LocalDate dueDate, double amount) {

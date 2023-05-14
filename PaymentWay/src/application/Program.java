@@ -1,6 +1,7 @@
 package application;
 
 import model.entities.Contract;
+import model.entities.Installment;
 import model.services.ContractService;
 import model.services.PaypalService;
 
@@ -27,18 +28,22 @@ public class Program {
         System.out.print("Quantidade de parcelas: ");
         int months = sc.nextInt();
 
-        Contract contract = new Contract(number, date, totalValue);
-        ContractService service = new ContractService(new PaypalService(), months);
+        Contract obj = new Contract(number, date, totalValue);
+        ContractService service = new ContractService(new PaypalService());
 
         for (int i = 1; i < (months + 1); i++) {
-           service.processContract(contract);
+           service.processContract(obj,months);
         }
 
         System.out.println();
         System.out.println("PARCELAS:");
-        for (int i = 0; i < months; i++) {
-            System.out.println(service.getInstallmentList().get(i));
+
+        for (Installment installment: obj.getInstallmentList()) {
+            System.out.println(installment);
         }
+//        for (int i = 0; i < months; i++) {
+//            System.out.println(obj.getInstallmentList().get(i));
+//        }
 
         System.out.println();
         sc.close();
