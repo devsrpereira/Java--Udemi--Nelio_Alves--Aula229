@@ -8,30 +8,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContractService {
-    OnlinePaymentService paymentService;
     private int months;
-
-    List<Installment> installments = new ArrayList<>();
+    OnlinePaymentService paymentService;
+    List<Installment> installmentList = new ArrayList<>();
 
     public ContractService(OnlinePaymentService paymentService, int months) {
         this.paymentService = paymentService;
         this.months = months;
     }
 
-    public int getMonths() {
-        return months;
+    public List<Installment> getInstallmentList() {
+        return installmentList;
     }
 
-    public void processContract(Contract contract, int months){
-        double valueMonths = contract.getTotalValue() / getMonths();
+    public void processContract(Contract contract){
+        double valueMonths = contract.getTotalValue() / months;
+        int month = installmentList.size() + 1;
+        double interest = paymentService.interest(valueMonths, month );
+        double fee = paymentService.paymentFee(interest + valueMonths);
 
-        for (int i = 0; i < getMonths(); i++) {
-            double interest = paymentService.interest(valueMonths, (i+1));
-            double fee = paymentService.paymentFee(interest + valueMonths);
-            LocalDate dueDate = contract.getDate().plusMonths(i+1);
-
-            Installment installment = new Installment(dueDate, (valueMonths + interest + fee));
-            installments.add(installment);
-        }
+        installmentList.add(new Installment(contract.getDate().plusMonths(month)
+                ,(valueMonths + interest + fee)));
     }
 }
